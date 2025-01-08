@@ -12,4 +12,35 @@
     <button id="calcButton">Calculate</button>
     <p id="output"></p>
 </body>
+    <script>
+        document.getElementById('calcButton').addEventListener('click', function() {
+            var num1 = parseFloat(document.getElementById('01').value);
+            var num2 = parseFloat(document.getElementById('02').value);
+            var operator = document.getElementById('operator').value;
+
+            var result;
+            switch (operator) {
+                case '+':
+                    result = num1 + num2;
+                    break;
+                case '-':
+                    result = num1 - num2;
+                    break;
+                case '*':
+                    result = num1 * num2;
+                    break;
+                case '/':
+                    if (num2 == 0) {
+                        document.getElementById('output').innerHTML = "Error: Division by zero";
+                        return;
+                    }
+                    result = num1 / num2;
+                    break;
+                default:
+                    document.getElementById('output').innerHTML = "Error: Invalid operator";
+                    return;
+            }
+            output.innerHTML = result;
+        });
+    </script>
 </html>
