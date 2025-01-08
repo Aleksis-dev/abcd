@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
     <input type="number" id="01">
     <input type="text" id="operator">
@@ -12,35 +14,44 @@
     <button id="calcButton">Calculate</button>
     <p id="output"></p>
 </body>
-    <script>
-        document.getElementById('calcButton').addEventListener('click', function() {
-            var num1 = parseFloat(document.getElementById('01').value);
-            var num2 = parseFloat(document.getElementById('02').value);
-            var operator = document.getElementById('operator').value;
+<script>
+    const operators = {
+        '+': (a, b) => a + b,
+        '-': (a, b) => a - b,
+        '*': (a, b) => a * b,
+        '/': (a, b) => b !== 0 ? a / b : "Error: Division by zero"
+    };
 
-            var result;
-            switch (operator) {
-                case '+':
-                    result = num1 + num2;
-                    break;
-                case '-':
-                    result = num1 - num2;
-                    break;
-                case '*':
-                    result = num1 * num2;
-                    break;
-                case '/':
-                    if (num2 == 0) {
-                        document.getElementById('output').innerHTML = "Error: Division by zero";
-                        return;
-                    }
-                    result = num1 / num2;
-                    break;
-                default:
-                    document.getElementById('output').innerHTML = "Error: Invalid operator";
-                    return;
-            }
+    const output = document.getElementById('output');
+
+    function checkNumbers(a, b, o) {
+        if (isNaN(a) || isNaN(b)) {
+            output.style.color = "red";
+            output.innerHTML = "Error: Invalid input";
+            return null;
+        }
+
+        if (!(o in operators)) {
+            output.style.color = "red";
+            output.innerHTML = "Error: Invalid operator";
+            return null;
+        }
+
+        return operators[o](a, b);
+    }
+
+    document.getElementById('calcButton').addEventListener('click', function () {
+        var num1 = parseFloat(document.getElementById('01').value);
+        var num2 = parseFloat(document.getElementById('02').value);
+        var operator = document.getElementById('operator').value;
+
+        var result = checkNumbers(num1, num2, operator);
+
+        if (result !== null) {
+            output.style.color = "black";
             output.innerHTML = result;
-        });
-    </script>
+        }
+    });
+</script>
+
 </html>
